@@ -1,0 +1,102 @@
+#coding:utf-8
+from ._dragbase import DragBase
+from .lip import Drag as lip
+from .hbx import Drag as hbx
+from .gilt import Drag as gilt
+from .yoox import Drag as yoox
+from .asos import Drag as asos
+from .size import Drag as size
+from .sasa import Drag as sasa
+from .fwrd import Drag as fwrd
+from .jcrew import Drag as jcrew
+from .iherb import Drag as iherb
+from .reiss import Drag as reiss
+from .apous import Drag as apous
+from .sixpm import Drag as sixpm
+from .mybag import Drag as mybag
+from .macys import Drag as macys
+from .yintai import Drag as yintai
+from .amazon import Drag as amazon
+from .mygeek import Drag as mygeek
+from .topman import Drag as topman
+from .ssense import Drag as ssense
+from .thehut import Drag as thehut
+from .ssfshop import Drag as ssfshop
+from .allsole import Drag as allsole
+from .revolve import Drag as revolve
+from .ashford import Drag as ashford
+from .coggles import Drag as coggles
+from .mankind import Drag as mankind
+from .kithnyc import Drag as kithnyc
+from .superdry import Drag as superdry
+from .kicksusa import Drag as kicksusa
+from .farfetch import Drag as farfetch
+from .everlane import Drag as everlane
+from .jdsports import Drag as jdsports
+from .jomashop import Drag as jomashop
+from .eastdane import Drag as eastdane
+from .mrporter import Drag as mrporter
+from .nysochina import Drag as nysochina
+from .lululemon import Drag as lululemon
+from .kitandace import Drag as kitandace
+from .cosstores import Drag as cosstores
+from .nordstrom import Drag as nordstrom
+from .thecorner import Drag as thecorner
+from .needsupply import Drag as needsupply
+from .finishline import Drag as finishline
+from .newbalance import Drag as newbalance
+from .feelunique import Drag as feelunique
+from .saksoff5th import Drag as saksoff5th
+from .pedroshoes import Drag as pedroshoes
+from .shopspring import Drag as shopspring
+from .nativeyouth import Drag as nativeyouth
+from .mangooutlet import Drag as mangooutlet
+from .sneakerhead import Drag as sneakerhead
+from .endclothing import Drag as endclothing
+from .wrongweather import Drag as wrongweather
+from .neimanmarcus import Drag as neimanmarcus
+from .luisaviaroma import Drag as luisaviaroma
+from .massimodutti import Drag as massimodutti
+from .beautyexpert import Drag as beautyexpert
+from .brooksengland import Drag as brooksengland
+from .bathandunwind import Drag as bathandunwind
+from .lookfantastic import Drag as lookfantastic
+from .strawberrynet import Drag as strawberrynet
+from .touchofmodern import Drag as touchofmodern
+from .extrabutterny import Drag as extrabutterny
+from .garmentquarter import Drag as garmentquarter
+from .worldofwatches import Drag as worldofwatches
+from .iwantoneofthose import Drag as iwantoneofthose
+from .saksfifthavenue import Drag as saksfifthavenue
+from .urbanoutfitters import Drag as urbanoutfitters
+from .bergdorfgoodman import Drag as bergdorfgoodman
+from .barneyswarehouse import Drag as barneyswarehouse
+from .sierratradingpost import Drag as sierratradingpost
+from .joesnewbalanceoutlet import Drag as joesnewbalanceoutlet
+
+
+from xyDragUtils import tool
+
+
+Instances = dict()
+Instances_count = dict()
+
+#构建每个抓取实例
+def Draws(cahnnelName,refresh=False) :
+	
+	global Instances
+
+	if cahnnelName in Instances and not refresh and Instances_count.get(cahnnelName,0) < 50:
+		Instances_count[cahnnelName]+= 1
+		return Instances[cahnnelName]
+
+	exec('from .{cName} import Drag as iobj'.format(cName=cahnnelName))
+	exec('from xyDragCfg.{cName}Cfg import Cfg as icfg'.format(cName=cahnnelName))
+
+	ins = iobj(icfg())
+
+	#保存到实例字典,方便以后调用.
+	Instances[cahnnelName] = ins
+	Instances_count[cahnnelName] = 0
+
+	return ins
